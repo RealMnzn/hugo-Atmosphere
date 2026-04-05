@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}" data-scene="sunny">
+<head>
+  {{- partial "head.html" . -}}
+  {{- block "styles" . }}{{ end -}}
+</head>
+<body>
+  {{- partial "header.html" . -}}
+
+  <div class="scene-layer" id="scene-layer"></div>
+  <div class="scene-cloud"></div>
+
+  <main class="site-main">
+    {{- block "main" . }}{{ end -}}
+  </main>
+
+  {{- partial "footer.html" . -}}
+
+  <script>window.__basePath = '{{ "/" | relURL }}';</script>
+  {{ $scene := resources.Get "js/scene.js" }}
+  {{ $sunny := resources.Get "js/sunny.js" }}
+  {{ $rainy := resources.Get "js/rainy.js" }}
+  {{ $search := resources.Get "js/search.js" }}
+  <script src="{{ $scene.RelPermalink }}"></script>
+  <script src="{{ $sunny.RelPermalink }}"></script>
+  <script src="{{ $rainy.RelPermalink }}"></script>
+  <script src="{{ $search.RelPermalink }}"></script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+{{ define "main" }}
+<div class="container">
+  <section class="home-profile">
+    <h1 class="profile-name">{{ .Site.Params.author | default "Author" }}</h1>
+    <p class="profile-bio">{{ .Params.bio | markdownify | default "A brief description about yourself goes here. Replace this placeholder with your own introduction." }}</p>
+    <div class="profile-links">
+      {{ with .Site.Params.github }}<a href="https://github.com/{{ . }}" class="profile-link" target="_blank" rel="noopener">GitHub</a>{{ end }}
+      {{ with .Site.Params.x }}<a href="https://x.com/{{ . }}" class="profile-link" target="_blank" rel="noopener">X</a>{{ end }}
+      {{ with .Site.Params.twitter }}<a href="https://twitter.com/{{ . }}" class="profile-link" target="_blank" rel="noopener">Twitter</a>{{ end }}
+      {{ with .Site.Params.email }}<a href="mailto:{{ . }}" class="profile-link">Email</a>{{ end }}
+      <a href='{{ "index.xml" | relURL }}' class="profile-link" target="_blank" rel="noopener">RSS</a>
+    </div>
+  </section>
+
+  {{ $posts := where .Site.RegularPages "Section" "posts" }}
+  {{ if $posts }}
+  <section class="home-recent">
+    <h2 class="section-title">Recent</h2>
+    <ul class="post-list">
+      {{ range first 5 $posts }}
+      <li class="post-item">
+        <a href="{{ .RelPermalink }}" class="post-item-link">{{ .Title }}</a>
+        <time class="post-item-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 02" }}</time>
+      </li>
+      {{ end }}
+    </ul>
+  </section>
+  {{ end }}
+</div>
+{{ end }}
+
+{{ define "styles" }}
+{{ $home := resources.Get "css/home.css" }}
+<link rel="stylesheet" href="{{ $home.RelPermalink }}">
+{{ end }}
