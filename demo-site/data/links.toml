@@ -1,5 +1,13 @@
 [[list]]
-group = "Links"
+group = "Friends"
+
+  [[list.items]]
+  name = "Mnzn's Blog"
+  url = "https://mnzn.me"
+  desc = "Misc & CTF player"
+
+[[list]]
+group = "Resources"
 
   [[list.items]]
   name = "Hugo"

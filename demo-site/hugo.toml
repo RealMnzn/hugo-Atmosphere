@@ -29,3 +29,16 @@ theme = 'atmosphere'
   description = 'Atmosphere theme demo site.'
   github = 'realmnzn'
   travellingURL = 'https://www.travellings.cn/train'
+
+  [[params.nav]]
+    name = "Home"
+    url = "/"
+  [[params.nav]]
+    name = "Archive"
+    url = "/posts/"
+  [[params.nav]]
+    name = "Links"
+    url = "/friends/"
+  [[params.nav]]
+    name = "About"
+    url = "/about/"

@@ -1,5 +1,5 @@
 ---
 title: "Links"
 layout: "single"
-type: "friends"
+type: "links"
 ---
