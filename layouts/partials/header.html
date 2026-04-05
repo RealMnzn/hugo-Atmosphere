@@ -1,18 +1,25 @@
 <header class="site-header">
   <div class="container header-inner">
     <nav class="site-nav">
-      {{ range .Site.Params.nav }}
-        {{ if .external }}
+      {{ with .Site.Params.nav }}
+        {{ range . }}
+          {{ if .external }}
       <a href="{{ .url }}" class="nav-link" target="_blank" rel="noopener">{{ .name }}</a>
-        {{ else }}
-          {{ $isActive := false }}
-          {{ if eq .url "/" }}
-            {{ $isActive = $.IsHome }}
           {{ else }}
-            {{ $isActive = hasPrefix (printf "%s" $.RelPermalink) .url }}
-          {{ end }}
+            {{ $isActive := false }}
+            {{ if eq .url "/" }}
+              {{ $isActive = $.IsHome }}
+            {{ else }}
+              {{ $isActive = hasPrefix (printf "%s" $.RelPermalink) .url }}
+            {{ end }}
       <a href="{{ .url | relURL }}" class="nav-link{{ if $isActive }} is-active{{ end }}">{{ .name }}</a>
+          {{ end }}
         {{ end }}
+      {{ else }}
+      <a href="{{ site.Home.RelPermalink }}" class="nav-link{{ if .IsHome }} is-active{{ end }}">Home</a>
+      <a href="{{ "posts/" | relURL }}" class="nav-link{{ if eq .Section "posts" }} is-active{{ end }}">Archive</a>
+      <a href="{{ "friends/" | relURL }}" class="nav-link{{ if eq .Title "Links" }} is-active{{ end }}">Links</a>
+      <a href="{{ "about/" | relURL }}" class="nav-link{{ if eq .Title "About" }} is-active{{ end }}">About</a>
       {{ end }}
     </nav>
     <div class="header-actions">
