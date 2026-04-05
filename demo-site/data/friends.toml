@@ -1,0 +1,12 @@
+[[list]]
+group = "Links"
+
+  [[list.items]]
+  name = "Hugo"
+  url = "https://gohugo.io/"
+  desc = "The world's fastest framework for building websites"
+
+  [[list.items]]
+  name = "Atmosphere Source"
+  url = "https://github.com/realmnzn/hugo-Atmosphere"
+  desc = "This theme's source code"

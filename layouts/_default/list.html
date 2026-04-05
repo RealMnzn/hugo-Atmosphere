@@ -1,0 +1,45 @@
+{{ define "main" }}
+<div class="container">
+  <header class="list-header">
+    <h1 class="list-title">Archive</h1>
+  </header>
+  <div class="archive-list">
+    {{ $paginator := .Paginate .Pages }}
+    {{ $byYear := $paginator.Pages.GroupByDate "2006" }}
+    {{ range $byYear }}
+    <section class="archive-year">
+      <h2 class="year-label">{{ .Key }}</h2>
+      <ul class="post-list">
+        {{ range .Pages }}
+        <li class="post-item">
+          <a href="{{ .RelPermalink }}" class="post-item-link">{{ .Title }}</a>
+          <time class="post-item-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 02" }}</time>
+        </li>
+        {{ end }}
+      </ul>
+    </section>
+    {{ end }}
+  </div>
+
+  {{ if gt $paginator.TotalPages 1 }}
+  <nav class="pagination">
+    {{ if $paginator.HasPrev }}
+    <a href="{{ $paginator.Prev.URL }}" class="page-link">&larr; Newer</a>
+    {{ else }}
+    <span class="page-link disabled">&larr; Newer</span>
+    {{ end }}
+    <span class="page-info">{{ $paginator.PageNumber }} / {{ $paginator.TotalPages }}</span>
+    {{ if $paginator.HasNext }}
+    <a href="{{ $paginator.Next.URL }}" class="page-link">Older &rarr;</a>
+    {{ else }}
+    <span class="page-link disabled">Older &rarr;</span>
+    {{ end }}
+  </nav>
+  {{ end }}
+</div>
+{{ end }}
+
+{{ define "styles" }}
+{{ $post := resources.Get "css/post.css" }}
+<link rel="stylesheet" href="{{ $post.RelPermalink }}">
+{{ end }}

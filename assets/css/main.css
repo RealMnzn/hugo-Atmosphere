@@ -1,0 +1,342 @@
+/* === Registered Custom Properties (enables smooth color transitions) === */
+@property --bg {
+    syntax: "<color>";
+    inherits: true;
+    initial-value: #f5f4f0;
+}
+@property --text {
+    syntax: "<color>";
+    inherits: true;
+    initial-value: #1a1a18;
+}
+@property --mid {
+    syntax: "<color>";
+    inherits: true;
+    initial-value: #5a554d;
+}
+@property --line {
+    syntax: "<color>";
+    inherits: true;
+    initial-value: #c8c4ba;
+}
+@property --accent {
+    syntax: "<color>";
+    inherits: true;
+    initial-value: #8a8580;
+}
+
+/* === Scene Palettes === */
+[data-scene="sunny"] {
+    --bg: #f5f4f0;
+    --text: #1a1a18;
+    --mid: #5a554d;
+    --line: #c8c4ba;
+    --accent: #8a8580;
+}
+
+[data-scene="rainy"] {
+    --bg: #0a0e14;
+    --text: #b4b4b4;
+    --mid: #505862;
+    --line: #1c2028;
+    --accent: #7a8fa6;
+}
+
+/* === Transition === */
+html {
+    transition:
+        --bg 0.3s ease,
+        --text 0.3s ease,
+        --mid 0.3s ease,
+        --line 0.3s ease,
+        --accent 0.3s ease;
+}
+
+/* === Reset === */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* === Base === */
+html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-y: scroll;
+    scrollbar-gutter: stable;
+}
+
+body {
+    font-family:
+        -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC",
+        "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease;
+}
+
+/* === Typography === */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--text);
+}
+
+h1 {
+    font-size: 1.75rem;
+    margin-bottom: 0.6em;
+}
+h2 {
+    font-size: 1.35rem;
+    margin-bottom: 0.5em;
+}
+h3 {
+    font-size: 1.15rem;
+    margin-bottom: 0.4em;
+}
+
+p {
+    margin-bottom: 1.2em;
+    color: var(--text);
+}
+
+a {
+    color: var(--accent);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: var(--text);
+}
+
+code {
+    font-family: "SF Mono", "Fira Code", "Cascadia Code", "Menlo", monospace;
+    font-size: 0.85em;
+    background: var(--line);
+    padding: 0.15em 0.4em;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+pre {
+    border-radius: 6px;
+    overflow-x: auto;
+    margin-bottom: 1.5em;
+    line-height: 1.6;
+    transition: background-color 0.3s ease;
+}
+
+pre code {
+    background: none;
+    padding: 0;
+    font-size: 0.82rem;
+    border-radius: 0;
+}
+
+/* Hugo Chroma highlight wrapper */
+.highlight {
+    margin-bottom: 1.5em;
+}
+
+.highlight pre {
+    margin: 0;
+    padding: 1em 1.2em;
+}
+
+.chroma {
+    background: var(--line) !important;
+    border-radius: 6px;
+    padding: 1em 1.2em;
+    overflow-x: auto;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Standalone pre (no Chroma wrapper) */
+pre:not(.chroma) {
+    background: var(--line);
+    padding: 1em 1.2em;
+}
+
+blockquote {
+    border-left: 2px solid var(--mid);
+    padding-left: 1em;
+    margin: 1.2em 0;
+    color: var(--mid);
+    font-style: italic;
+    transition:
+        border-color 0.3s ease,
+        color 0.3s ease;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid var(--line);
+    margin: 2em 0;
+    transition: border-color 0.3s ease;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+}
+
+/* === Layout === */
+.container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.site-main {
+    position: relative;
+    z-index: 10;
+    padding: 2rem 0 4rem;
+    flex: 1;
+}
+
+.site-main > .container {
+    max-width: 720px;
+}
+
+/* === Scene Layer (atmospheric effects overlay) === */
+.scene-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+/* === Rainy cloud/fog overlay === */
+.scene-cloud {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    background:
+        radial-gradient(ellipse 120% 50% at 50% -5%, rgba(55, 65, 80, 0.35) 0%, transparent 70%),
+        radial-gradient(ellipse 80% 40% at 25% 0%, rgba(50, 60, 75, 0.2) 0%, transparent 60%),
+        radial-gradient(ellipse 80% 40% at 75% 0%, rgba(50, 60, 75, 0.15) 0%, transparent 55%),
+        linear-gradient(180deg, rgba(35, 45, 58, 0.25) 0%, transparent 40%);
+}
+
+[data-scene="rainy"] .scene-cloud {
+    opacity: 1;
+}
+
+/* === Footer === */
+.site-footer {
+    position: relative;
+    z-index: 10;
+    padding: 2rem 0;
+    text-align: center;
+    color: var(--mid);
+    font-size: 0.82rem;
+    border-top: 1px solid var(--line);
+    transition:
+        border-color 0.3s ease,
+        color 0.3s ease;
+}
+
+/* === Audio Toggle === */
+.audio-toggle {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: var(--bg);
+    color: var(--mid);
+    font-size: 16px;
+    cursor: pointer;
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+        border-color 0.3s ease,
+        color 0.3s ease,
+        background-color 0.3s ease,
+        opacity 0.3s ease;
+    opacity: 0;
+    pointer-events: none;
+    line-height: 0;
+}
+
+.audio-toggle:hover {
+    border-color: var(--mid);
+    color: var(--text);
+}
+
+.audio-toggle.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.audio-toggle.muted {
+    opacity: 0.4;
+}
+
+.audio-toggle.muted:hover {
+    opacity: 0.7;
+}
+
+/* === Selection === */
+::selection {
+    background: var(--accent);
+    color: var(--bg);
+}
+
+/* === 404 === */
+.error-page {
+    text-align: center;
+    padding: 8rem 0 4rem;
+}
+
+.error-code {
+    font-size: 4rem;
+    font-weight: 300;
+    color: var(--mid);
+    margin-bottom: 0.3rem;
+}
+
+.error-message {
+    color: var(--mid);
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+}
+
+.error-link {
+    font-size: 0.88rem;
+    color: var(--mid);
+    border: 1px solid var(--line);
+    padding: 0.4em 1em;
+    border-radius: 6px;
+    transition: color 0.2s ease, border-color 0.3s ease;
+}
+
+.error-link:hover {
+    color: var(--text);
+}
