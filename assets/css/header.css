@@ -10,11 +10,14 @@
   align-items: center;
   justify-content: space-between;
   height: 56px;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
 }
 
 .site-nav {
   display: flex;
-  gap: 1.6rem;
+  gap: 1.4rem;
 }
 
 .nav-link {
@@ -62,6 +65,25 @@
 }
 
 .search-btn:hover { color: var(--text); }
+
+/* Travelling button */
+.travelling-btn {
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.3s ease, color 0.2s ease;
+  line-height: 0;
+  color: var(--mid);
+}
+
+.travelling-btn:hover {
+  border-color: var(--mid);
+  color: var(--text);
+}
 
 /* Scene toggle */
 .scene-toggle {

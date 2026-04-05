@@ -96,12 +96,19 @@
       const newMain = doc.querySelector('.site-main');
       if (!newMain) { location.href = url; return; }
 
+      // Inject missing stylesheets and wait for them to load
+      const stylePromises = [];
       doc.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
-        if (!document.querySelector(`link[href="${link.getAttribute('href')}"]`)) {
-          const nl = document.createElement('link'); nl.rel = 'stylesheet'; nl.href = link.getAttribute('href');
+        const href = link.getAttribute('href');
+        if (!document.querySelector(`link[href="${href}"]`)) {
+          const nl = document.createElement('link'); nl.rel = 'stylesheet'; nl.href = href;
+          stylePromises.push(new Promise(resolve => {
+            nl.onload = nl.onerror = resolve;
+          }));
           document.head.appendChild(nl);
         }
       });
+      if (stylePromises.length) await Promise.all(stylePromises);
 
       mainEl.style.transition = 'opacity 0.2s ease';
       mainEl.style.opacity = '0';
@@ -109,6 +116,7 @@
       mainEl.innerHTML = newMain.innerHTML;
       mainEl.style.opacity = '1';
       document.title = doc.querySelector('title')?.textContent || document.title;
+      window.dispatchEvent(new CustomEvent('pjax:complete', { detail: { url } }));
       history.pushState(null, '', url);
       updateActiveNav(new URL(url, location.origin).pathname);
       const hash = new URL(url, location.origin).hash.slice(1);

@@ -9,3 +9,7 @@
 {{ $styles := slice $main $header $syntax | resources.Concat "css/bundle.css" }}
 <link rel="stylesheet" href="{{ $styles.RelPermalink }}">
 
+{{ with .Site.Params.waline }}
+<link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css">
+{{ end }}
+

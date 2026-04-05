@@ -1,0 +1,59 @@
+{{ define "main" }}
+<div class="container">
+  <header class="list-header">
+    <h1 class="list-title">{{ .Title }}</h1>
+  </header>
+
+  {{/* Collect unique tags */}}
+  {{ $allTags := slice }}
+  {{ range .Site.Data.timeline.entries }}
+    {{ range .tags }}
+      {{ $allTags = $allTags | append . }}
+    {{ end }}
+  {{ end }}
+  {{ $allTags = $allTags | uniq }}
+
+  <div class="tl-controls">
+    {{ if $allTags }}
+    <div class="tl-tags">
+      {{ range $allTags }}
+      <button class="tl-tag" data-tag="{{ . }}">{{ . }}</button>
+      {{ end }}
+    </div>
+    {{ end }}
+    <button class="tl-toggle-hidden" id="tl-toggle-hidden">Show hidden</button>
+  </div>
+
+  <div class="tl-container" id="tl-container">
+    {{ range sort .Site.Data.timeline.entries "date" "desc" }}
+    <div class="tl-entry{{ if .hidden }} tl-is-hidden{{ end }}" data-type="{{ .type }}" data-tags="{{ delimit .tags "," }}">
+      <div class="tl-marker">
+        {{ if eq .type "thought" }}
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        {{ else if eq .type "moment" }}
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        {{ else }}
+          <span class="tl-dot"></span>
+        {{ end }}
+      </div>
+      <div class="tl-content">
+        <time class="tl-date">{{ .date }}</time>
+        {{ with .title }}<h3 class="tl-title">{{ . }}</h3>{{ end }}
+        <p class="tl-text">{{ .content }}</p>
+        {{ with .image }}<img src="{{ . }}" class="tl-image" alt="">{{ end }}
+        {{ with .tags }}
+        <div class="tl-entry-tags">
+          {{ range . }}<span class="tl-entry-tag">{{ . }}</span>{{ end }}
+        </div>
+        {{ end }}
+      </div>
+    </div>
+    {{ end }}
+  </div>
+</div>
+{{ end }}
+
+{{ define "styles" }}
+{{ $timeline := resources.Get "css/timeline.css" }}
+<link rel="stylesheet" href="{{ $timeline.RelPermalink }}">
+{{ end }}

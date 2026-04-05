@@ -40,11 +40,27 @@
     color: var(--accent);
 }
 
+.archive-list .post-item-meta {
+    display: flex;
+    align-items: baseline;
+    gap: 0.8rem;
+    flex-shrink: 0;
+    margin-left: 1rem;
+}
+
+.archive-list .post-item-views {
+    font-size: 0.75rem;
+    color: var(--mid);
+    opacity: 0.6;
+}
+
+.archive-list .post-item-views::after {
+    content: ' views';
+}
+
 .archive-list .post-item-date {
     font-size: 0.8rem;
     color: var(--mid);
-    flex-shrink: 0;
-    margin-left: 1rem;
 }
 
 /* === Single Post === */
@@ -253,6 +269,37 @@
     font-size: 0.75rem;
     color: var(--mid);
     opacity: 0.6;
+}
+
+/* === Sponsor QR Codes === */
+.sponsor-qrcodes {
+    display: flex;
+    gap: 2.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 2rem 0;
+}
+
+.sponsor-qr {
+    text-align: center;
+}
+
+.sponsor-qr .qr-svg {
+    width: 180px;
+    height: 180px;
+    border-radius: 6px;
+    border: 1px dashed var(--line);
+    padding: 4px;
+    background: transparent;
+    color: var(--text);
+    transition: border-color 0.3s ease, color 0.3s ease;
+}
+
+.sponsor-label {
+    display: block;
+    margin-top: 0.6rem;
+    color: var(--mid);
+    font-size: 0.9rem;
 }
 
 /* === Pagination === */

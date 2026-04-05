@@ -5,6 +5,9 @@
     <div class="post-meta">
       <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
       <span class="post-reading-time">{{ math.Round (div (countwords .Content) 250.0) }} min read</span>
+      {{ with .Site.Params.waline }}
+      <span class="post-views"><span class="waline-pageview-count" data-path="{{ $.RelPermalink }}"> </span> views</span>
+      {{ end }}
       {{ with .Params.tags }}
       <span class="post-tags">
         {{ range . }}<a href="{{ "tags/" | relURL }}{{ . | urlize }}/" class="tag">#{{ . }}</a>{{ end }}
@@ -13,6 +16,21 @@
     </div>
   </header>
 
+  {{ if .Params.password }}
+  <div class="encrypt-container" data-encrypt-password="{{ .Params.password }}">
+    <div class="encrypt-content post-content">
+      {{ if .TableOfContents }}
+      <nav class="post-toc">
+        <details open>
+          <summary class="toc-title">Table of Contents</summary>
+          {{ .TableOfContents }}
+        </details>
+      </nav>
+      {{ end }}
+      {{ .Content }}
+    </div>
+  </div>
+  {{ else }}
   {{ if .TableOfContents }}
   <nav class="post-toc">
     <details open>
@@ -21,10 +39,10 @@
     </details>
   </nav>
   {{ end }}
-
   <div class="post-content">
     {{ .Content }}
   </div>
+  {{ end }}
 
   <div class="post-footer">
     {{ with .Params.tags }}
@@ -40,9 +58,13 @@
       <a href="{{ .RelPermalink }}" class="post-nav-link next">{{ .Title }} &rarr;</a>
       {{ end }}
     </nav>
+    {{ with .Site.Params.waline }}
+    <div id="waline-comment"></div>
+    {{ else }}
     <div class="comment-placeholder">
       <p class="comment-note">Comments will be available soon.</p>
     </div>
+    {{ end }}
   </div>
 </article>
 {{ end }}

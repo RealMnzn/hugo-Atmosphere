@@ -1,0 +1,43 @@
+{{ define "main" }}
+<div class="container">
+    <header class="list-header">
+        <h1 class="list-title">{{ .Title }}</h1>
+    </header>
+    {{ $categoryLabels := dict "game" "Games" "book" "Books" "music" "Music"
+    "movie" "Movies" "anime" "Anime" "tv" "TV" }} {{ $categories := slice }} {{
+    range $.Site.Data.interests.items }} {{ if not (in $categories .category) }}
+    {{ $categories = append .category $categories }} {{ end }} {{ end }} {{
+    range $categories }} {{ $category := . }} {{ $items := where
+    $.Site.Data.interests.items "category" $category }}
+    <section class="interests-section">
+        <h2 class="interests-group-title">
+            {{ index $categoryLabels $category | default (humanize $category) }}
+        </h2>
+        <div class="interests-grid">
+            {{ range $items }}
+            <div class="interest-card">
+                {{ with .image }}<img
+                    class="interest-bg"
+                    src="{{ . }}"
+                    alt=""
+                />{{ end }}
+                <div class="interest-body">
+                    <div class="interest-header">
+                        <span class="interest-name">{{ .name }}</span>
+                        {{ with .platform }}<span class="interest-platform"
+                            >{{ . }}</span
+                        >{{ end }}
+                    </div>
+                    {{ with .desc }}<span class="interest-desc">{{ . }}</span>{{
+                    end }}
+                </div>
+            </div>
+            {{ end }}
+        </div>
+    </section>
+    {{ end }}
+</div>
+{{ end }} {{ define "styles" }} {{ $interests := resources.Get
+"css/interests.css" }}
+<link rel="stylesheet" href="{{ $interests.RelPermalink }}" />
+{{ end }}

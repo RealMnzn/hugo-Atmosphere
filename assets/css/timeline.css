@@ -1,0 +1,144 @@
+/* === Timeline Controls === */
+.tl-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.tl-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.tl-tag {
+  font-size: 0.8rem;
+  color: var(--mid);
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 0.2em 0.6em;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.tl-tag:hover,
+.tl-tag.active {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.tl-toggle-hidden {
+  font-size: 0.8rem;
+  color: var(--mid);
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 0.2em 0.6em;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.tl-toggle-hidden:hover,
+.tl-toggle-hidden.active {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+/* === Timeline Container === */
+.tl-container {
+  position: relative;
+  padding-left: 2rem;
+}
+
+.tl-container::before {
+  content: '';
+  position: absolute;
+  left: 0.45rem;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--line);
+  transition: background-color 0.3s ease;
+}
+
+/* === Timeline Entry === */
+.tl-entry {
+  position: relative;
+  padding-bottom: 2rem;
+}
+
+.tl-entry.tl-filtered,
+.tl-entry.tl-is-hidden {
+  display: none;
+}
+
+.tl-container.tl-show-hidden .tl-entry.tl-is-hidden {
+  display: block;
+  opacity: 0.5;
+}
+
+/* === Marker === */
+.tl-marker {
+  position: absolute;
+  left: -2rem;
+  top: 0.15rem;
+  width: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--mid);
+}
+
+.tl-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--mid);
+  transition: background-color 0.3s ease;
+}
+
+/* === Content === */
+.tl-date {
+  font-size: 0.78rem;
+  color: var(--mid);
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+.tl-title {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.3rem;
+}
+
+.tl-text {
+  font-size: 0.9rem;
+  color: var(--text);
+  line-height: 1.6;
+  margin-bottom: 0.4rem;
+}
+
+.tl-image {
+  max-width: 100%;
+  border-radius: 6px;
+  margin-top: 0.5rem;
+}
+
+.tl-entry-tags {
+  display: flex;
+  gap: 0.4rem;
+  margin-top: 0.3rem;
+}
+
+.tl-entry-tag {
+  font-size: 0.72rem;
+  color: var(--mid);
+  border: 1px solid var(--line);
+  padding: 0.1em 0.4em;
+  border-radius: 4px;
+  transition: border-color 0.3s ease;
+}

@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="{{ .Site.LanguageCode }}" data-scene="sunny">
 <head>
+  <script>
+    (function(){var s=localStorage.getItem('scene');if(s==='rainy'||s==='sunny')document.documentElement.setAttribute('data-scene',s)})();
+  </script>
   {{- partial "head.html" . -}}
   {{- block "styles" . }}{{ end -}}
 </head>
@@ -25,5 +28,16 @@
   <script src="{{ $sunny.RelPermalink }}"></script>
   <script src="{{ $rainy.RelPermalink }}"></script>
   <script src="{{ $search.RelPermalink }}"></script>
+  {{ $timeline := resources.Get "js/timeline.js" }}
+  <script src="{{ $timeline.RelPermalink }}"></script>
+  {{ $encrypt := resources.Get "js/encrypt.js" }}
+  <script src="{{ $encrypt.RelPermalink }}"></script>
+  {{ $zoom := resources.Get "js/zoom.js" }}
+  <script src="{{ $zoom.RelPermalink }}"></script>
+  {{ with .Site.Params.waline }}
+  <meta name="waline-server" content="{{ .serverURL }}">
+  {{ $walineInit := resources.Get "js/waline-init.js" }}
+  <script type="module" src="{{ $walineInit.RelPermalink }}"></script>
+  {{ end }}
 </body>
 </html>

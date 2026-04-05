@@ -11,9 +11,15 @@
       <h2 class="year-label">{{ .Key }}</h2>
       <ul class="post-list">
         {{ range .Pages }}
+        {{ $postPath := .RelPermalink }}
         <li class="post-item">
           <a href="{{ .RelPermalink }}" class="post-item-link">{{ .Title }}</a>
-          <time class="post-item-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 02" }}</time>
+          <span class="post-item-meta">
+            {{ with $.Site.Params.waline }}
+            <span class="waline-pageview-count post-item-views" data-path="{{ $postPath }}"> </span>
+            {{ end }}
+            <time class="post-item-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 02" }}</time>
+          </span>
         </li>
         {{ end }}
       </ul>

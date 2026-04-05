@@ -309,6 +309,126 @@ img {
     color: var(--bg);
 }
 
+/* === Image Zoom === */
+.img-zoom-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: rgba(0, 0, 0, 0);
+    backdrop-filter: blur(0px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: zoom-out;
+    opacity: 0;
+    transition: opacity 0.25s ease, background 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+.img-zoom-overlay.open {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+}
+
+.img-zoom-image {
+    max-width: 90vw;
+    max-height: 90vh;
+    border-radius: 6px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    transform: scale(0.92);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.img-zoom-overlay.open .img-zoom-image {
+    transform: scale(1);
+}
+
+/* === Encrypted Content === */
+.encrypt-locked {
+    text-align: center;
+    padding: 3rem 1.5rem;
+    border: 1px dashed var(--line);
+    border-radius: 6px;
+    transition: border-color 0.3s ease;
+}
+
+.encrypt-prompt svg {
+    color: var(--mid);
+    margin-bottom: 1rem;
+}
+
+.encrypt-hint {
+    color: var(--mid);
+    font-size: 0.9rem;
+    margin-bottom: 1.2rem;
+}
+
+.encrypt-form {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.encrypt-input {
+    font-family: inherit;
+    font-size: 0.88rem;
+    padding: 0.4em 0.8em;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: var(--bg);
+    color: var(--text);
+    outline: none;
+    width: 200px;
+    transition: border-color 0.2s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+.encrypt-input:focus {
+    border-color: var(--mid);
+}
+
+.encrypt-btn {
+    font-family: inherit;
+    font-size: 0.85rem;
+    padding: 0.4em 1em;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: none;
+    color: var(--mid);
+    cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.encrypt-btn:hover {
+    border-color: var(--mid);
+    color: var(--text);
+}
+
+.encrypt-error {
+    color: #c44;
+    font-size: 0.82rem;
+    margin-top: 0.8rem;
+}
+
+/* === Waline Comment Overrides === */
+#waline-comment {
+    --waline-bg-color: transparent;
+    --waline-bg-color-light: var(--line);
+    --waline-bg-color-hover: var(--line);
+    --waline-border-color: var(--line);
+    --waline-disable-bg-color: var(--line);
+    --waline-color: var(--text);
+    --waline-active-color: var(--accent);
+    --waline-theme-color: var(--accent);
+    --waline-font-size: 0.9rem;
+    --waline-border: 1px solid var(--line);
+    --waline-avatar-size: 2.5rem;
+    margin-top: 2rem;
+}
+
+.post-views {
+    color: var(--mid);
+}
+
 /* === 404 === */
 .error-page {
     text-align: center;

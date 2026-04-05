@@ -1,0 +1,28 @@
+{{ define "main" }}
+<div class="container">
+  <header class="list-header">
+    <h1 class="list-title">{{ .Title }}</h1>
+  </header>
+  {{ range .Site.Data.links.list }}
+  <section class="links-section">
+    <h2 class="links-group-title">{{ .group }}</h2>
+    <div class="links-grid">
+      {{ range .items }}
+      <a href="{{ .url }}" class="link-card" target="_blank" rel="noopener">
+        {{ with .image }}<img class="link-bg" src="{{ . }}" alt="">{{ end }}
+        <div class="link-body">
+          <span class="link-name">{{ .name }}</span>
+          {{ with .desc }}<span class="link-desc">{{ . }}</span>{{ end }}
+        </div>
+      </a>
+      {{ end }}
+    </div>
+  </section>
+  {{ end }}
+</div>
+{{ end }}
+
+{{ define "styles" }}
+{{ $links := resources.Get "css/links.css" }}
+<link rel="stylesheet" href="{{ $links.RelPermalink }}">
+{{ end }}
